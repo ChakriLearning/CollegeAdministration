@@ -17,19 +17,23 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
         return this.studentList;
     }  //printing/retrieving all the student's from list;
     @Override
-    public void deleteStudent(int rollNo) {
+    public Student deleteStudent(int rollNo) {
         Iterator<Student> iterator = studentList.iterator();
+        Student deletedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();       //deleting specific student details from list;
             if(student.getRollNo() == rollNo) {
+                deletedStudent = student;
                 iterator.remove();
             }
         }
+        return deletedStudent;
     }
 
     @Override
-    public void updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
+    public Student updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
         Iterator<Student> iterator = studentList.iterator();
+        Student updatedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == studentRollNoToUpdate) {
@@ -37,8 +41,10 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
                 student.setName(studentName);
                 student.setAge(studentAge);
                 student.setPhoneNo(studentPhoneNo);
+                updatedStudent = student;
             }
         }
+        return updatedStudent;
     }
 
     @Override

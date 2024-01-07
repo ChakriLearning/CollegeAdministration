@@ -12,9 +12,7 @@ public class Student {
     public String getName() {
         return this.name;
     }
-    public int getAge() {
-        return this.age;
-    }
+    public int getAge() { return this.age; }
     public long getPhoneNo() {
         return this.phoneNo;
     }

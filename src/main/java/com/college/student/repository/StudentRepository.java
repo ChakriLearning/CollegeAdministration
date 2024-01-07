@@ -5,8 +5,8 @@ import java.util.List;
 public interface StudentRepository {
     List<Student> listStudents();   //display all student details
     void  addStudent(Student student);  //adding student in list;
-    void deleteStudent(int rollNo);   //deleting specific student from list;
-    void updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo);
+    Student deleteStudent(int rollNo);   //deleting specific student from list;
+    Student updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo);
     //update specific student by rollNo from list
     Student getStudentData(int studentRollNo);  //to get specific student data by rollNo;
 }

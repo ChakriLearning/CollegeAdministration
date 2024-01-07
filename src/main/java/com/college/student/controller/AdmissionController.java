@@ -41,6 +41,7 @@ public class AdmissionController {
                    break;
                 case 2 :
                     System.out.println("\n-------------List of Students---------------");
+                    System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
                     List<Student> studentList = studentService.listStudents();
                     for(Student student1 : studentList) {
                         System.out.println(student1);
@@ -51,8 +52,11 @@ public class AdmissionController {
                     System.out.print("\nEnter Student Roll No to delete from Student List : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    studentService.deleteStudentByRollNo(studentRollNo);
-                    System.out.println("--------------Student details deleted Successfully From List----------------");
+                    Student deletedStudent = studentService.deleteStudentByRollNo(studentRollNo);
+                    System.out.println("below Student Detail : ");
+                    System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
+                    System.out.println(deletedStudent);
+                    System.out.println("--------------Has Been deleted Successfully From List----------------");
                     break;
                 case 4 :
                     System.out.print("\nEnter student RollNo to Update From List : ");
@@ -69,8 +73,11 @@ public class AdmissionController {
                     System.out.print("\nEnter new Student phoneNumber to Update : ");
                     studentPhoneNo = scanner.nextLong();
                     scanner.nextLine();
-                    studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate, studentRollNo,studentName,studentAge,studentPhoneNo);
-                    System.out.println("-----------------Student Details Updated Successfully----------------");
+                    Student updatedStudent = studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate, studentRollNo,studentName,studentAge,studentPhoneNo);
+                    System.out.println("Below Student detail :");
+                    System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
+                    System.out.println(updatedStudent);
+                    System.out.println("-----------------Has Been Updated Successfully----------------");
                     break;
                 case 5 :
                     System.out.print("Enter rollNo to get the Student Data : ");
@@ -78,6 +85,7 @@ public class AdmissionController {
                     scanner.nextLine();
                     Student studentDetail = studentService.getStudentByRollNo(studentRollNo);
                     System.out.println("-------------Student--------------");
+                    System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
                     System.out.println(studentDetail);
                     System.out.println("-------------Student--------------");
                     break;

@@ -11,25 +11,27 @@ public class StudentService {
         if(storageType == 1) {
             studentRepository = new InMemoryStudentRepositoryImpl();
             //interface       =        //class
+        } else {
+           // studentRepository = new InFileStudentRepositoryImpl();
         }
     }
 
     public void addStudent(Student student) {
-        studentRepository.addStudent(student);
+        this.studentRepository.addStudent(student);
     }
     public List<Student> listStudents() {
-        return studentRepository.listStudents();
+        return this.studentRepository.listStudents();
     }
 
-    public void deleteStudentByRollNo(int rollNo) {
-        studentRepository.deleteStudent(rollNo);
+    public Student deleteStudentByRollNo(int rollNo) {
+        return this.studentRepository.deleteStudent(rollNo);
     }
 
-    public void updateStudentDetailsByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
-        studentRepository.updateStudentByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
+    public Student updateStudentDetailsByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
+       return this.studentRepository.updateStudentByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
     }
 
     public Student getStudentByRollNo(int studentRollNo) {
-        return  studentRepository.getStudentData(studentRollNo);
+        return  this.studentRepository.getStudentData(studentRollNo);
     }
 }
