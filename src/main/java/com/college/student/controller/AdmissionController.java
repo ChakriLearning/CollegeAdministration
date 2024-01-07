@@ -20,20 +20,20 @@ public class AdmissionController {
                 case 1 :
                     Student student = new Student();
                    System.out.print("\nEnter Student RollNo : ");
-                   int rollNo = scanner.nextInt();
+                   int studentRollNo = scanner.nextInt();
                    scanner.nextLine();
                    System.out.print("\nEnter Student Name : ");
-                   String name = scanner.nextLine();
+                   String studentName = scanner.nextLine();
                    System.out.print("\nEnter Student Age : ");
-                   int age = scanner.nextInt();
+                   byte studentAge = scanner.nextByte();
                    scanner.nextLine();
                    System.out.print("\nEnter Student phoneNumber : ");
-                   long phoneNo = scanner.nextLong();
+                   long studentPhoneNo = scanner.nextLong();
                    scanner.nextLine();
-                   student.setRollNo(rollNo);
-                   student.setName(name);
-                   student.setAge(age);
-                   student.setPhoneNo(phoneNo);
+                   student.setRollNo(studentRollNo);
+                   student.setName(studentName);
+                   student.setAge(studentAge);
+                   student.setPhoneNo(studentPhoneNo);
                    studentService.addStudent(student);
                    System.out.println("-------------Student details added Successfully-------------");
                    break;
@@ -43,13 +43,33 @@ public class AdmissionController {
                     for(Student student1 : studentList) {
                         System.out.println(student1);
                     }
-                    System.out.println("-------------List of Students---------------");
+                    System.out.println("-------------List of Students---------------\n");
                     break;
                 case 3 :
                     System.out.print("\nEnter Student Roll No to delete from Student List : ");
-                    rollNo = scanner.nextInt();
+                    studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    studentService.deleteStudentByRollNo(rollNo);
+                    studentService.deleteStudentByRollNo(studentRollNo);
+                    System.out.println("--------------Student details deleted Successfully From List----------------\n");
+                    break;
+                case 4 :
+                    System.out.print("\nEnter student RollNo to Update From List : ");
+                    int studentRollNoToUpdate = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("\nEnter new Student RollNo to Update : ");
+                    studentRollNo = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("\nEnter new Student Name to Update : ");
+                    studentName = scanner.nextLine();
+                    System.out.print("\nEnter new Student Age to Update : ");
+                    studentAge = scanner.nextByte();
+                    scanner.nextLine();
+                    System.out.print("\nEnter new Student phoneNumber to Update : ");
+                    studentPhoneNo = scanner.nextLong();
+                    scanner.nextLine();
+                    studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
+                    System.out.println("-----------------Student Details Updated Successfully----------------\n");
+                    break;
                 case 0 :
                     System.exit(0);
             }
@@ -67,7 +87,7 @@ public class AdmissionController {
     }
     public static int displayStudentChoices() {
         System.out.println("1. Add Student Info\n2. Display All Students data");
-        System.out.println("3.delete specific student data\n4.update specific student data");
+        System.out.println("3.delete specific student data\n4.update specific student details\n0. '0' for EXIT \n" );
         System.out.print("Enter Option : ");
         int choice = scanner.nextInt();
         scanner.nextLine();

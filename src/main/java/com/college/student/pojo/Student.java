@@ -3,9 +3,9 @@ package com.college.student.pojo;
 public class Student {
     private int rollNo;
     private String name;
-    private int age;
+    private byte age;
     private long phoneNo;
-    public int getrollNo() {
+    public int getRollNo() {
         return this.rollNo;
     }
     public String getName() {
@@ -23,13 +23,13 @@ public class Student {
     public void setName(String name) {
         this.name = name;
     }
-    public void setAge(int age) {
+    public void setAge(byte age) {
         this.age = age;
     }
     public void setPhoneNo(long phoneNo) {
         this.phoneNo = phoneNo;
     }
     public String toString() {
-        return getrollNo() + "  " + getName() + "  " + getAge() + "  " + getPhoneNo();
+        return getRollNo() + "  " + getName() + "  " + getAge() + "  " + getPhoneNo();
     }
 }

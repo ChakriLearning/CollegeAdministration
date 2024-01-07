@@ -27,4 +27,8 @@ public class StudentService {
     public void deleteStudentByRollNo(int rollNo) {
         studentRepository.deleteStudent(rollNo);
     }
+
+    public void updateStudentDetailsByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
+        studentRepository.updateStudentByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
+    }
 }
