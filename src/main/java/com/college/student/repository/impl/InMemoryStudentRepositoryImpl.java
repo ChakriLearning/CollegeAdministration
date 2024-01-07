@@ -42,5 +42,17 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
         }
     }
 
+    @Override
+    public Student getStudentData(int studentRollNo) {
+        Iterator<Student> iterator = studentList.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if(student.getRollNo() == studentRollNo) {
+                return student;
+            }
+        }
+        return null;
+    }
+
 
 }

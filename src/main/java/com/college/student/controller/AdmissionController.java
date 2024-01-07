@@ -73,6 +73,15 @@ public class AdmissionController {
                     studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate, studentRollNo,studentName,studentAge,studentPhoneNo);
                     System.out.println("-----------------Student Details Updated Successfully----------------");
                     break;
+                case 5 :
+                    System.out.print("Enter rollNo to get the Student Data : ");
+                    studentRollNo = scanner.nextInt();
+                    scanner.nextLine();
+                    Student studentDetail = studentService.getStudentByRollNo(studentRollNo);
+                    System.out.println("-------------Student--------------");
+                    System.out.println(studentDetail);
+                    System.out.println("-------------Student--------------");
+                    break;
                 case 0 :
                     System.exit(0);
             }
@@ -89,8 +98,9 @@ public class AdmissionController {
         return storageType;
     }
     public static int displayStudentChoices() {
-        System.out.println("1. Add Student Info\n2. Display All Students data");
-        System.out.println("3.delete specific student data\n4.update specific student details\n0. '0' for EXIT" );
+        System.out.println("1. Add Student In List\n2. Display All Students data");
+        System.out.println("3.delete specific student data\n4.update specific student details" );
+        System.out.println("5. Get specific student data by rollNo\n0. '0' for EXIT");
         System.out.print("Enter Option : ");
         int choice = scanner.nextInt();
         scanner.nextLine();

@@ -31,4 +31,8 @@ public class StudentService {
     public void updateStudentDetailsByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
         studentRepository.updateStudentByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
     }
+
+    public Student getStudentByRollNo(int studentRollNo) {
+        return  studentRepository.getStudentData(studentRollNo);
+    }
 }

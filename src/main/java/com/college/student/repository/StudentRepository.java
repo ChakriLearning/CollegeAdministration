@@ -15,4 +15,5 @@ public interface StudentRepository {
 
     void updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo);
 
+    Student getStudentData(int studentRollNo);
 }
