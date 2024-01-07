@@ -9,7 +9,10 @@ import java.util.Scanner;
 
 public class AdmissionController {
     private static Scanner scanner = new Scanner(System.in);
-
+    private static int studentRollNo;
+    private static String studentName;
+    private static byte studentAge;
+    private static long studentPhoneNo;
     public static void main(String[] args) {
         int storageType = storageTypeOption();
         StudentService studentService = new StudentService(storageType);
@@ -20,15 +23,15 @@ public class AdmissionController {
                 case 1 :
                     Student student = new Student();
                    System.out.print("\nEnter Student RollNo : ");
-                   int studentRollNo = scanner.nextInt();
+                   studentRollNo = scanner.nextInt();
                    scanner.nextLine();
                    System.out.print("\nEnter Student Name : ");
-                   String studentName = scanner.nextLine();
+                   studentName = scanner.nextLine();
                    System.out.print("\nEnter Student Age : ");
-                   byte studentAge = scanner.nextByte();
+                   studentAge = scanner.nextByte();
                    scanner.nextLine();
                    System.out.print("\nEnter Student phoneNumber : ");
-                   long studentPhoneNo = scanner.nextLong();
+                   studentPhoneNo = scanner.nextLong();
                    scanner.nextLine();
                    student.setRollNo(studentRollNo);
                    student.setName(studentName);
@@ -50,7 +53,7 @@ public class AdmissionController {
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
                     studentService.deleteStudentByRollNo(studentRollNo);
-                    System.out.println("--------------Student details deleted Successfully From List----------------\n");
+                    System.out.println("--------------Student details deleted Successfully From List----------------");
                     break;
                 case 4 :
                     System.out.print("\nEnter student RollNo to Update From List : ");
@@ -67,8 +70,8 @@ public class AdmissionController {
                     System.out.print("\nEnter new Student phoneNumber to Update : ");
                     studentPhoneNo = scanner.nextLong();
                     scanner.nextLine();
-                    studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
-                    System.out.println("-----------------Student Details Updated Successfully----------------\n");
+                    studentService.updateStudentDetailsByRollNo(studentRollNoToUpdate, studentRollNo,studentName,studentAge,studentPhoneNo);
+                    System.out.println("-----------------Student Details Updated Successfully----------------");
                     break;
                 case 0 :
                     System.exit(0);
@@ -87,7 +90,7 @@ public class AdmissionController {
     }
     public static int displayStudentChoices() {
         System.out.println("1. Add Student Info\n2. Display All Students data");
-        System.out.println("3.delete specific student data\n4.update specific student details\n0. '0' for EXIT \n" );
+        System.out.println("3.delete specific student data\n4.update specific student details\n0. '0' for EXIT" );
         System.out.print("Enter Option : ");
         int choice = scanner.nextInt();
         scanner.nextLine();
