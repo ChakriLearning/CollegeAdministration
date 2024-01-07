@@ -1,12 +1,11 @@
+//controller(main class) - interface to the user/programmer
+
 package com.college.student.controller;
 
 import com.college.student.pojo.Student;
 import com.college.student.service.StudentService;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-
 public class AdmissionController {
     private static Scanner scanner = new Scanner(System.in);
     private static int studentRollNo;

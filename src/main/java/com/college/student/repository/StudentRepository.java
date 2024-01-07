@@ -1,19 +1,12 @@
 package com.college.student.repository;
 
 import com.college.student.pojo.Student;
-
 import java.util.List;
-
 public interface StudentRepository {
-    List<Student> listStudents();
-    void  addStudent(Student student);
-
-   // List<Student> getStudent();
-
-    void deleteStudent(int rollNo);
-   // void updateStudentDetailsByRollNo(int studentRollNo, String studentName, byte studentAge, long studentPhoneNo);
-
+    List<Student> listStudents();   //display all student details
+    void  addStudent(Student student);  //adding student in list;
+    void deleteStudent(int rollNo);   //deleting specific student from list;
     void updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo);
-
-    Student getStudentData(int studentRollNo);
+    //update specific student by rollNo from list
+    Student getStudentData(int studentRollNo);  //to get specific student data by rollNo;
 }

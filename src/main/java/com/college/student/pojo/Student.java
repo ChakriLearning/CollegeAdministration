@@ -1,5 +1,6 @@
 package com.college.student.pojo;
-
+//POJO-plain old java object's
+//it's to store the student data;
 public class Student {
     private int rollNo;
     private String name;

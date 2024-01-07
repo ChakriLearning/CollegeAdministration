@@ -2,17 +2,16 @@ package com.college.student.repository.impl;
 
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 public class InMemoryStudentRepositoryImpl implements StudentRepository {
     private List<Student> studentList = new ArrayList<>();
     @Override
     public void addStudent(Student student) {  //adding student in list;
         studentList.add(student);
     }
+
     @Override
     public List<Student> listStudents() {
         return this.studentList;

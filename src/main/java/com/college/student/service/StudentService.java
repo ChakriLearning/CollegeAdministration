@@ -1,14 +1,11 @@
+//StudentService class will call various method of StudentRepository to perform operations;
 package com.college.student.service;
 
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
 import com.college.student.repository.impl.InMemoryStudentRepositoryImpl;
-
 import java.util.List;
-
 public class StudentService {
-
-    private int storageType;
     private StudentRepository studentRepository;
     public StudentService(int storageType) {
         if(storageType == 1) {
