@@ -4,6 +4,7 @@ package com.college.student.controller;
 
 import com.college.student.pojo.Student;
 import com.college.student.service.StudentService;
+
 import java.util.List;
 import java.util.Scanner;
 public class AdmissionController {
@@ -21,17 +22,17 @@ public class AdmissionController {
             switch (choice) {
                 case 1 :
                     Student student = new Student();
-                   System.out.print("\nEnter Student RollNo : ");
-                   studentRollNo = scanner.nextInt();
-                   scanner.nextLine();
-                   System.out.print("\nEnter Student Name : ");
-                   studentName = scanner.nextLine();
-                   System.out.print("\nEnter Student Age : ");
-                   studentAge = scanner.nextByte();
-                   scanner.nextLine();
-                   System.out.print("\nEnter Student phoneNumber : ");
-                   studentPhoneNo = scanner.nextLong();
-                   scanner.nextLine();
+                    System.out.print("\nEnter Student RollNo : ");
+                    studentRollNo = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("\nEnter Student Name : ");
+                    studentName = scanner.nextLine();
+                    System.out.print("\nEnter Student Age : ");
+                    studentAge = scanner.nextByte();
+                    scanner.nextLine();
+                    System.out.print("\nEnter Student phoneNumber : ");
+                    studentPhoneNo = scanner.nextLong();
+                    scanner.nextLine();
                    student.setRollNo(studentRollNo);
                    student.setName(studentName);
                    student.setAge(studentAge);
@@ -91,6 +92,8 @@ public class AdmissionController {
                     break;
                 case 0 :
                     System.exit(0);
+                default:
+                   System.out.println("Invalid choice");
             }
         }
     }

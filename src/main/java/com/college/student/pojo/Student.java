@@ -1,7 +1,13 @@
 package com.college.student.pojo;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 //POJO-plain old java object's
 //it's to store the student data;
-public class Student {
+public class Student implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private int rollNo;
     private String name;
     private byte age;

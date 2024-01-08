@@ -1,5 +1,6 @@
 package com.college.student.repository.impl;
 
+import com.college.student.exception.InvalidInputException;
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
             if(student.getRollNo() == rollNo) {
                 deletedStudent = student;
                 iterator.remove();
+            } else {
+                throw new InvalidInputException("Student RollNo not Found");
             }
         }
         return deletedStudent;
@@ -42,6 +45,8 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
                 student.setAge(studentAge);
                 student.setPhoneNo(studentPhoneNo);
                 updatedStudent = student;
+            } else {
+                throw new InvalidInputException("Student RollNo Not Found");
             }
         }
         return updatedStudent;

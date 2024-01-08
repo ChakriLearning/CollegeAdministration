@@ -3,6 +3,7 @@ package com.college.student.service;
 
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
+import com.college.student.repository.impl.InFileStudentRepositoryImpl;
 import com.college.student.repository.impl.InMemoryStudentRepositoryImpl;
 import java.util.List;
 public class StudentService {
@@ -11,8 +12,8 @@ public class StudentService {
         if(storageType == 1) {
             studentRepository = new InMemoryStudentRepositoryImpl();
             //interface       =        //class
-        } else {
-           // studentRepository = new InFileStudentRepositoryImpl();
+        } else if(storageType == 2){
+           studentRepository = new InFileStudentRepositoryImpl();
         }
     }
 
