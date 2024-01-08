@@ -24,21 +24,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
 //            i.printStackTrace();
 //        }
     }
-
-//    public List<Student> listStudents() {
-//        List<Student> studentList = new ArrayList<>();
-//        Student student = null;
-//        try {
-//            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-//            student = (Student) objectInputStream.readObject();
-//            objectInputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        studentList.add(student);
-//        return studentList;
-//    }
-
+    
     public List<Student> listStudents() {
         List<Student> studentList = new ArrayList<>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.file))) {
@@ -55,27 +41,11 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
         }
         return studentList;
     }
-//    @Override
-//    public List<Student> listStudents() {
-//        List<Student> studentList = null;
-//         try(objectInputStream = new ObjectInputStream(new FileInputStream(this.file))) {
-//            while(true) {
-//                try {
-//                    Student student = (Student)objectInputStream.readObject();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch(Exception e) {
-//             e.printStackTrace();
-//        }
-//        return studentList;
-//    }
-
     @Override
     public void addStudent(Student student) {
         try {
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file,true));
+            //append is true cuz to avoid the overwritting the existing content;
             objectOutputStream.writeObject(student);
 //            objectOutputStream.close();
         } catch (IOException i) {
