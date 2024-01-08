@@ -1,10 +1,12 @@
 package com.college.student.repository.impl;
 
+import com.college.student.exception.InvalidInputException;
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class InFileStudentRepositoryImpl implements Serializable, StudentRepository {
@@ -13,29 +15,21 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
     private FileOutputStream fileOutputStream;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
+    private List<Student> studentList;
     public InFileStudentRepositoryImpl() {
-        this.file = new File("C:\\Users\\chakr\\IdeaProjects\\CollegeAdministration\\CollegeAdministration.txt");
-//        try {
-//            this.fileInputStream = new FileInputStream(this.file);
-//            this.fileOutputStream = new FileOutputStream(this.file);
-//            this.objectInputStream = new ObjectInputStream(this.fileInputStream);
-//            this.objectOutputStream = new ObjectOutputStream(this.fileOutputStream);
-//        } catch (IOException i) {
-//            i.printStackTrace();
-//        }
+        this.file = new File("C:\\Users\\chakr\\IdeaProjects\\CollegeAdministration\\Student.txt");
+        studentList = new ArrayList<>();
+        try {
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
-    
+
     public List<Student> listStudents() {
-        List<Student> studentList = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.file))) {
-            while (true) {
-                try {
-                    Student student = (Student) ois.readObject();
-                    studentList.add(student);
-                } catch (EOFException e) {
-                    break;
-                }
-            }
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
+            studentList = (ArrayList<Student>) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
         }
@@ -43,11 +37,10 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
     }
     @Override
     public void addStudent(Student student) {
-        try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file,true));
-            //append is true cuz to avoid the overwritting the existing content;
-            objectOutputStream.writeObject(student);
-//            objectOutputStream.close();
+        studentList.add(student);
+        try{
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+            objectOutputStream.writeObject(studentList);
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -55,16 +48,81 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
 
     @Override
     public Student deleteStudent(int rollNo) {
-        return null;
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
+            studentList = (ArrayList<Student>) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException f) {
+            f.printStackTrace();
+        }
+        Iterator<Student> iterator = studentList.iterator();
+        Student deletedStudent = null;
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if(student.getRollNo() == rollNo) {
+                deletedStudent = student;
+                iterator.remove();
+            }
+        }
+        try {
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+            objectOutputStream.writeObject(studentList);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+        return deletedStudent;
+
     }
 
     @Override
     public Student updateStudentByRollNo(int studentRollNoToUpdate, int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
-        return null;
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
+            studentList = (ArrayList<Student>) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        Iterator<Student> iterator = studentList.iterator();
+        Student updatedStudent = null;
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if(student.getRollNo() == studentRollNoToUpdate) {
+                student.setRollNo(studentRollNo);
+                student.setName(studentName);
+                student.setAge(studentAge);
+                student.setPhoneNo(studentPhoneNo);
+                updatedStudent = student;
+            }
+        }
+        try {
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+            objectOutputStream.writeObject(studentList);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+        return updatedStudent;
     }
 
     @Override
     public Student getStudentData(int studentRollNo) {
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
+            studentList = (ArrayList<Student>) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        Iterator<Student> iterator = studentList.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if(student.getRollNo() == studentRollNo) {
+                try {
+                    objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+                    objectOutputStream.writeObject(studentList);
+                } catch (IOException i){
+                    i.printStackTrace();
+                }
+                return student;
+            }
+        }
         return null;
     }
 }
