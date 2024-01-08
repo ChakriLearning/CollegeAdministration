@@ -54,6 +54,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
         } catch (IOException | ClassNotFoundException f) {
             f.printStackTrace();
         }
+        int size = studentList.size();
         Iterator<Student> iterator = studentList.iterator();
         Student deletedStudent = null;
         while (iterator.hasNext()) {
@@ -61,6 +62,9 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
             if(student.getRollNo() == rollNo) {
                 deletedStudent = student;
                 iterator.remove();
+            } else {
+                size--;
+                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
             }
         }
         try {
@@ -81,6 +85,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
         }
+        int size = studentList.size();
         Iterator<Student> iterator = studentList.iterator();
         Student updatedStudent = null;
         while (iterator.hasNext()) {
@@ -91,6 +96,9 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
                 student.setAge(studentAge);
                 student.setPhoneNo(studentPhoneNo);
                 updatedStudent = student;
+            } else {
+                size--;
+                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
             }
         }
         try {
@@ -110,6 +118,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
         }
+        int size = studentList.size();
         Iterator<Student> iterator = studentList.iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
@@ -121,6 +130,9 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
                     i.printStackTrace();
                 }
                 return student;
+            } else {
+                size--;
+                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
             }
         }
         return null;
