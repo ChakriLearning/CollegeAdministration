@@ -8,11 +8,11 @@ import com.college.student.repository.impl.InMemoryStudentRepositoryImpl;
 import java.util.List;
 public class StudentService {
     private StudentRepository studentRepository;
-    public StudentService(int storageType) {
-        if(storageType == 1) {
+    public StudentService(String storageType) {
+        if(storageType.equals("InMemory") || storageType.equals("inmemory")) {
             studentRepository = new InMemoryStudentRepositoryImpl();
             //interface       =        //class
-        } else if(storageType == 2){
+        } else if(storageType.equals("FileMemory") || storageType.equals("filememory")){
            studentRepository = new InFileStudentRepositoryImpl();
         }
     }
@@ -28,8 +28,8 @@ public class StudentService {
         return this.studentRepository.deleteStudent(rollNo);
     }
 
-    public Student updateStudentDetailsByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
-       return this.studentRepository.updateStudentByRollNo(studentRollNoToUpdate,studentRollNo,studentName,studentAge,studentPhoneNo);
+    public Student updateStudentDetailsByRollNo(Student updateStudent) {
+       return this.studentRepository.updateStudentByRollNo(updateStudent);
     }
 
     public Student getStudentByRollNo(int studentRollNo) {

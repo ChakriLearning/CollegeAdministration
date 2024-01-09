@@ -20,56 +20,42 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
     @Override
     public Student deleteStudent(int rollNo) {
         Iterator<Student> iterator = studentList.iterator();
-        int size = studentList.size();
-        Student deletedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();       //deleting specific student details from list;
             if(student.getRollNo() == rollNo) {
-                deletedStudent = student;
                 iterator.remove();
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
+                return student;
             }
         }
-        return deletedStudent;
+        return null;
     }
 
     @Override
-    public Student updateStudentByRollNo(int studentRollNoToUpdate,int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
+    public Student updateStudentByRollNo(Student updateStudent) {
         Iterator<Student> iterator = studentList.iterator();
-        int size = studentList.size();
-        Student updatedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();
-            if(student.getRollNo() == studentRollNoToUpdate) {
-                student.setRollNo(studentRollNo);
-                student.setName(studentName);
-                student.setAge(studentAge);
-                student.setPhoneNo(studentPhoneNo);
-                updatedStudent = student;
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
+            if(student.getRollNo() == updateStudent.getRollNo()) {
+                student.setRollNo(updateStudent.getRollNo());
+                student.setName(updateStudent.getName());
+                student.setAge(updateStudent.getAge());
+                student.setPhoneNo(updateStudent.getPhoneNo());
+                return student;
             }
         }
-        return updatedStudent;
+        return null;
     }
 
     @Override
     public Student getStudentData(int studentRollNo) {
-        int size = studentList.size();
         Iterator<Student> iterator = studentList.iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == studentRollNo) {
                 return student;
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
             }
         }
-        return null;
+       return null;
     }
 
 

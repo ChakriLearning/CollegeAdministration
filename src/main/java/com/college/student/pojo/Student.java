@@ -18,7 +18,7 @@ public class Student implements Serializable {
     public String getName() {
         return this.name;
     }
-    public int getAge() { return this.age; }
+    public byte getAge() { return this.age; }
     public long getPhoneNo() {
         return this.phoneNo;
     }

@@ -1,139 +1,89 @@
 package com.college.student.repository.impl;
 
-import com.college.student.exception.InvalidInputException;
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.io.*;
 public class InFileStudentRepositoryImpl implements Serializable, StudentRepository {
-    private File file;
-    private FileInputStream fileInputStream;
-    private FileOutputStream fileOutputStream;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
-    private List<Student> studentList;
+    private final File file;
     public InFileStudentRepositoryImpl() {
         this.file = new File("C:\\Users\\chakr\\IdeaProjects\\CollegeAdministration\\Student.txt");
-        studentList = new ArrayList<>();
-        try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
     }
 
+    @Override
     public List<Student> listStudents() {
-        try {
-            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-            studentList = (ArrayList<Student>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException i) {
-            i.printStackTrace();
-        }
-        return studentList;
+        return readStudentObject();
     }
+
     @Override
     public void addStudent(Student student) {
-        studentList.add(student);
-        try{
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-            objectOutputStream.writeObject(studentList);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+        List<Student> studentList = readStudentObject();   //first read the file
+        studentList.add(student);  //adding the new student to the existing studentList
+        writeStudentObject(studentList); //and write the new studentList to the file  else file will be overwritten everytime add a new student;
     }
 
     @Override
     public Student deleteStudent(int rollNo) {
-        try {
-            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-            studentList = (ArrayList<Student>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException f) {
-            f.printStackTrace();
-        }
-        int size = studentList.size();
+        List<Student> studentList = readStudentObject();  //reading the student file first and
         Iterator<Student> iterator = studentList.iterator();
-        Student deletedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == rollNo) {
-                deletedStudent = student;
-                iterator.remove();
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
+                iterator.remove();             //after deleting the specific student will add the new list again to the file;
+                writeStudentObject(studentList);
+                return student;
             }
         }
-        try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-            objectOutputStream.writeObject(studentList);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-        return deletedStudent;
-
+        return null;
     }
 
     @Override
-    public Student updateStudentByRollNo(int studentRollNoToUpdate, int studentRollNo, String studentName, byte studentAge, long studentPhoneNo) {
-        try {
-            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-            studentList = (ArrayList<Student>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException i) {
-            i.printStackTrace();
-        }
-        int size = studentList.size();
+    public Student updateStudentByRollNo(Student updateStudent) {
+        List<Student> studentList = readStudentObject();   //first reading the student object file and assign to the student list;
         Iterator<Student> iterator = studentList.iterator();
-        Student updatedStudent = null;
         while (iterator.hasNext()) {
             Student student = iterator.next();
-            if(student.getRollNo() == studentRollNoToUpdate) {
-                student.setRollNo(studentRollNo);
-                student.setName(studentName);
-                student.setAge(studentAge);
-                student.setPhoneNo(studentPhoneNo);
-                updatedStudent = student;
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
+            if(student.getRollNo() == updateStudent.getRollNo()) {
+                student.setRollNo(updateStudent.getRollNo());
+                student.setName(updateStudent.getName());
+                student.setAge(updateStudent.getAge());
+                student.setPhoneNo(updateStudent.getPhoneNo());  //after updating all the values will add the new list to the file again;
+                writeStudentObject(studentList);
+                return student;
             }
         }
-        try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-            objectOutputStream.writeObject(studentList);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-        return updatedStudent;
+        return null;
     }
 
     @Override
     public Student getStudentData(int studentRollNo) {
-        try {
-            objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-            studentList = (ArrayList<Student>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException i) {
-            i.printStackTrace();
-        }
-        int size = studentList.size();
-        Iterator<Student> iterator = studentList.iterator();
+        Iterator<Student> iterator = readStudentObject().iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == studentRollNo) {
-                try {
-                    objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-                    objectOutputStream.writeObject(studentList);
-                } catch (IOException i){
-                    i.printStackTrace();
-                }
                 return student;
-            } else {
-                size--;
-                if(size == 0) throw new InvalidInputException("Student RollNo Not Found");
             }
+        }
+        return null;
+    }
+
+    public void writeStudentObject(List<Student> studentList) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
+            objectOutputStream.writeObject(studentList);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    public List<Student> readStudentObject() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
+            return (List<Student>) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
         }
         return null;
     }
