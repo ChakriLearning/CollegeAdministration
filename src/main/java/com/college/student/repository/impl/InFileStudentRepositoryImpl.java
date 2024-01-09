@@ -73,8 +73,6 @@ public class InFileStudentRepositoryImpl implements StudentRepository {
 
     @Override
     public boolean isExist(int rollNo) {
-        return false;
+        return getStudentData(rollNo) != null;
     }
-
-
 }
