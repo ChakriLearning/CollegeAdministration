@@ -58,5 +58,14 @@ public class InMemoryStudentRepositoryImpl implements StudentRepository {
        return null;
     }
 
+    @Override
+    public boolean isExist(int rollNo) {
+        for( Student student : studentList) {   //returns true if student rollNo exists else false;
+            if(student.getRollNo() == rollNo) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

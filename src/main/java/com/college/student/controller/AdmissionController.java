@@ -53,7 +53,7 @@ public class AdmissionController {
                     System.out.print("\nEnter Student Roll No to delete from Student List : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(isStudentExist(studentService,studentRollNo)) {
+                    if(studentService.isStudentExist(studentRollNo)) {
                         Student deletedStudent = studentService.deleteStudentByRollNo(studentRollNo);
                         System.out.println("below Student Detail : ");
                         System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
@@ -61,7 +61,6 @@ public class AdmissionController {
                         System.out.println("--------------Has Been deleted Successfully From List----------------");
                     } else {
                         System.out.println("Student rollNo doesn't Exits !  Please Enter the Correct RollNo !!!");
-                        continue;
                     }
 
                     break;
@@ -70,7 +69,7 @@ public class AdmissionController {
                     System.out.print("\nEnter student RollNo to Update From List : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(isStudentExist(studentService,studentRollNo)) {
+                    if(studentService.isStudentExist(studentRollNo)) {
                         System.out.print("\nEnter new  Name to Update : ");
                         studentName = scanner.nextLine();
                         System.out.print("\nEnter new Age to Update : ");
@@ -97,7 +96,7 @@ public class AdmissionController {
                     System.out.print("Enter rollNo to get the Student Data : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(isStudentExist(studentService,studentRollNo)) {
+                    if(studentService.isStudentExist(studentRollNo)) {
                         Student studentDetail = studentService.getStudentByRollNo(studentRollNo);
                         System.out.println("-------------Student--------------");
                         System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
@@ -119,9 +118,9 @@ public class AdmissionController {
         System.out.println("where do you want to save the data ?");
         System.out.println("1. InMemory  || inmemory");
         System.out.println("2. FileMemory || filememory");
+        System.out.println("3. CSV || csv");
         System.out.print("Enter Option : ");
-        String storageType = scanner.nextLine();
-        return storageType;
+        return scanner.nextLine();
     }
     public static int displayStudentChoices(Scanner scanner,int choice) {
         System.out.println("1. Add Student In List\n2. Display All Students data");
@@ -131,14 +130,5 @@ public class AdmissionController {
         choice = scanner.nextInt();
         scanner.nextLine();
         return choice;
-    }
-    public static boolean isStudentExist(StudentService studentService, int rollNo) {
-        List<Student> studentList = studentService.listStudents();
-        for( Student student : studentList) {   //returns true if student rollNo exists else false;
-            if(student.getRollNo() == rollNo) {
-                return true;
-            }
-        }
-        return false;
     }
 }

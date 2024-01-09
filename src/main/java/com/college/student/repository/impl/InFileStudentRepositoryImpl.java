@@ -2,37 +2,39 @@ package com.college.student.repository.impl;
 
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
-import java.util.ArrayList;
+import com.college.student.utils.FileUtils;
+
 import java.util.Iterator;
 import java.util.List;
 import java.io.*;
-public class InFileStudentRepositoryImpl implements Serializable, StudentRepository {
-    private final File file;
+public class InFileStudentRepositoryImpl implements StudentRepository {
+    private final FileUtils<Student> fileUtils;
     public InFileStudentRepositoryImpl() {
-        this.file = new File("C:\\Users\\chakr\\IdeaProjects\\CollegeAdministration\\Student.txt");
+        File file = new File("C:\\Users\\chakr\\IdeaProjects\\CollegeAdministration\\Student.txt");
+        this.fileUtils = new FileUtils<>(file);
     }
 
     @Override
     public List<Student> listStudents() {
-        return readStudentObject();
+        return this.fileUtils.readObject();
     }
 
     @Override
     public void addStudent(Student student) {
-        List<Student> studentList = readStudentObject();   //first read the file
+        List<Student> studentList = this.fileUtils.readObject();   //first read the file
         studentList.add(student);  //adding the new student to the existing studentList
-        writeStudentObject(studentList); //and write the new studentList to the file  else file will be overwritten everytime add a new student;
+        this.fileUtils.writeObject(studentList); //and write the new studentList to the file  else file will be overwritten everytime add a new student;
     }
 
     @Override
     public Student deleteStudent(int rollNo) {
-        List<Student> studentList = readStudentObject();  //reading the student file first and
+        List<Student> studentList = this.fileUtils.readObject();  //reading the student file first and
         Iterator<Student> iterator = studentList.iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == rollNo) {
                 iterator.remove();             //after deleting the specific student will add the new list again to the file;
-                writeStudentObject(studentList);
+                this.fileUtils.writeObject(studentList);
                 return student;
             }
         }
@@ -41,7 +43,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
 
     @Override
     public Student updateStudentByRollNo(Student updateStudent) {
-        List<Student> studentList = readStudentObject();   //first reading the student object file and assign to the student list;
+        List<Student> studentList = this.fileUtils.readObject();   //first reading the student object file and assign to the student list;
         Iterator<Student> iterator = studentList.iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
@@ -50,7 +52,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
                 student.setName(updateStudent.getName());
                 student.setAge(updateStudent.getAge());
                 student.setPhoneNo(updateStudent.getPhoneNo());  //after updating all the values will add the new list to the file again;
-                writeStudentObject(studentList);
+                this.fileUtils.writeObject(studentList);
                 return student;
             }
         }
@@ -59,7 +61,7 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
 
     @Override
     public Student getStudentData(int studentRollNo) {
-        Iterator<Student> iterator = readStudentObject().iterator();
+        Iterator<Student> iterator = this.fileUtils.readObject().iterator();
         while (iterator.hasNext()) {
             Student student = iterator.next();
             if(student.getRollNo() == studentRollNo) {
@@ -69,22 +71,10 @@ public class InFileStudentRepositoryImpl implements Serializable, StudentReposit
         return null;
     }
 
-    public void writeStudentObject(List<Student> studentList) {
-        try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));
-            objectOutputStream.writeObject(studentList);
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+    @Override
+    public boolean isExist(int rollNo) {
+        return false;
     }
 
-    public List<Student> readStudentObject() {
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(this.file));
-            return (List<Student>) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException i) {
-            i.printStackTrace();
-        }
-        return null;
-    }
+
 }

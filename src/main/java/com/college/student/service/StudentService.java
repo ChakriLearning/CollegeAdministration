@@ -3,6 +3,7 @@ package com.college.student.service;
 
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
+import com.college.student.repository.impl.InCSVFileStudentRepositoryImpl;
 import com.college.student.repository.impl.InFileStudentRepositoryImpl;
 import com.college.student.repository.impl.InMemoryStudentRepositoryImpl;
 import java.util.List;
@@ -14,6 +15,8 @@ public class StudentService {
             //interface       =        //class
         } else if(storageType.equals("FileMemory") || storageType.equals("filememory")){
            studentRepository = new InFileStudentRepositoryImpl();
+        } else if(storageType.equals("csv") || storageType.equals("CSV")) {
+            studentRepository = new InCSVFileStudentRepositoryImpl();
         }
     }
 
@@ -34,5 +37,8 @@ public class StudentService {
 
     public Student getStudentByRollNo(int studentRollNo) {
         return  this.studentRepository.getStudentData(studentRollNo);
+    }
+    public boolean isStudentExist(int rollNo) {
+        return this.studentRepository.isExist(rollNo);
     }
 }
