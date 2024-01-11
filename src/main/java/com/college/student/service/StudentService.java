@@ -4,6 +4,7 @@ package com.college.student.service;
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
 import com.college.student.repository.impl.InCSVFileStudentRepositoryImpl;
+import com.college.student.repository.impl.InDBRepositoryImplementation;
 import com.college.student.repository.impl.InFileStudentRepositoryImpl;
 import com.college.student.repository.impl.InMemoryStudentRepositoryImpl;
 import java.util.List;
@@ -17,6 +18,8 @@ public class StudentService {
            studentRepository = new InFileStudentRepositoryImpl();
         } else if(storageType.equals("csv") || storageType.equals("CSV")) {
             studentRepository = new InCSVFileStudentRepositoryImpl();
+        } else if (storageType.equals("db") || storageType.equals("indb")) {
+            studentRepository =  new InDBRepositoryImplementation();
         }
     }
 

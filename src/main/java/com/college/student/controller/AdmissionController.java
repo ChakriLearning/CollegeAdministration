@@ -119,6 +119,7 @@ public class AdmissionController {
         System.out.println("1. InMemory  || inmemory");
         System.out.println("2. FileMemory || filememory");
         System.out.println("3. CSV || csv");
+        System.out.println("4.Indb || db implementation");
         System.out.print("Enter Option : ");
         return scanner.nextLine();
     }

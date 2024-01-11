@@ -11,7 +11,12 @@ public class CSVReadAndWriter {
         this.file = file;
     }
     public void writeHeadings() {
-
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.file,true));
+            writer.write("RollNo, " + "Name, " + " Age, " + "PhoneNo");
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
 
     public List<Student> readStudents() {
