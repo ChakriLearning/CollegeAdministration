@@ -18,7 +18,7 @@ public class InDBRepositoryImplementation implements StudentRepository {
             while (resultset.next()) {
                 Student student = new Student();
                 student.setRollNo(resultset.getInt(1));
-                student.setName(resultset.getString(2));
+                student.setName(resultset.getString("name"));
                 student.setAge(resultset.getByte(3));
                 student.setPhoneNo(resultset.getLong(4));
                 studentList.add(student);
