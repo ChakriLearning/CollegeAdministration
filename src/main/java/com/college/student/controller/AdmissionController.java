@@ -5,6 +5,7 @@ package com.college.student.controller;
 import com.college.student.pojo.Student;
 import com.college.student.repository.StudentRepository;
 //import com.college.student.service.StudentService;
+import com.college.student.service.StudentService;
 import com.college.student.studentfactory.StudentRepositoryFactory;
 
 import java.util.List;
@@ -17,9 +18,7 @@ public class AdmissionController {
         byte studentAge;
         long studentPhoneNo;
         String storageType = storageTypeOption(scanner);
-//        StudentService studentService = new StudentService(storageType);
-        StudentRepositoryFactory studentRepositoryFactory = new StudentRepositoryFactory();
-        StudentRepository studentRepository = studentRepositoryFactory.getStudentRepositoryInstance(storageType);
+        StudentService studentService = new StudentService(storageType);
         int choice = Integer.MAX_VALUE;
         while (true) {
             choice = displayStudentChoices(scanner,choice);
@@ -42,13 +41,13 @@ public class AdmissionController {
                    student.setAge(studentAge);
                    student.setPhoneNo(studentPhoneNo);
                   // studentService.addStudent(student);
-                    studentRepository.addStudent(student);
+                    studentService.addStudent(student);
                    System.out.println("-------------Student details added Successfully-------------");
                    break;
                 case 2 :
                     System.out.println("\n-------------List of Students---------------");
                     System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
-                    List<Student> studentList = studentRepository.listStudents();
+                    List<Student> studentList = studentService.listStudents();
                     for(Student student1 : studentList) {
                         System.out.println(student1);
                     }
@@ -58,8 +57,8 @@ public class AdmissionController {
                     System.out.print("\nEnter Student Roll No to delete from Student List : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(studentRepository.isExist(studentRollNo)) {
-                        Student deletedStudent = studentRepository.deleteStudent(studentRollNo);
+                    if(studentService.isStudentExist(studentRollNo)) {
+                        Student deletedStudent = studentService.deleteStudentByRollNo(studentRollNo);
                         System.out.println("below Student Detail : ");
                         System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
                         System.out.println(deletedStudent);
@@ -74,7 +73,7 @@ public class AdmissionController {
                     System.out.print("\nEnter student RollNo to Update From List : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(studentRepository.isExist(studentRollNo)) {
+                    if(studentService.isStudentExist(studentRollNo)) {
                         System.out.print("\nEnter new  Name to Update : ");
                         studentName = scanner.nextLine();
                         System.out.print("\nEnter new Age to Update : ");
@@ -87,7 +86,7 @@ public class AdmissionController {
                         student.setName(studentName);
                         student.setAge(studentAge);
                         student.setPhoneNo(studentPhoneNo);
-                        Student updatedStudent = studentRepository.updateStudentByRollNo(student);
+                        Student updatedStudent = studentService.updateStudentDetailsByRollNo(student);
                         System.out.println("Below Student detail :");
                         System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
                         System.out.println(updatedStudent);
@@ -101,8 +100,8 @@ public class AdmissionController {
                     System.out.print("Enter rollNo to get the Student Data : ");
                     studentRollNo = scanner.nextInt();
                     scanner.nextLine();
-                    if(studentRepository.isExist(studentRollNo)) {
-                        Student studentDetail = studentRepository.getStudentData(studentRollNo);
+                    if(studentService.isStudentExist(studentRollNo)) {
+                        Student studentDetail = studentService.getStudentByRollNo(studentRollNo);
                         System.out.println("-------------Student--------------");
                         System.out.println(" RollNo |  Name  |  Age  |  PhoneNo");
                         System.out.println(studentDetail);
